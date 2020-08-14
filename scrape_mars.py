@@ -17,13 +17,14 @@ def scrape():
 
     ### NASA Mars News website to scrape ####################################
     news_url='https://mars.nasa.gov/news/'
-    time.sleep(1)
+    
 
     # Scrape page into Soup
     browser.visit(news_url)
     news_html = browser.html
+    time.sleep(2)
     news_soup = bs(news_html, 'html.parser')
-
+    
     # Get the news title and paragraph
     news_title = news_soup.find_all('div', class_="content_title")[1].text
     news_paragraph = news_soup.find('div', class_="article_teaser_body").text
@@ -36,12 +37,13 @@ def scrape():
     # to get the full size jpg img of the FEATURED IMAGE on the first page by Clicking "FULL IMAGE" button
     # and click "more info" button  to get to the full image
     full_img = browser.find_by_id('full_image').first.click()
-    time.sleep(2)
+    time.sleep(1)
     browser.click_link_by_partial_text('more info')
 
     img_html = browser.html
     img_soup = bs(img_html, 'html.parser')
-
+    time.sleep(1)
+    
     partial_img_url = img_soup.find('img', class_="main_image")['src']
     featured_img_url = "https://www.jpl.nasa.gov" + partial_img_url 
 
